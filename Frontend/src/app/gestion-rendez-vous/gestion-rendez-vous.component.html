@@ -1,0 +1,224 @@
+<div class="page-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-text">
+        <i class="fas fa-heartbeat"></i>
+        MedPortal
+      </span>
+    </div>
+    <div class="nav-right">
+      <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo">
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-section" *ngIf="currentMedecin">
+  <img src="../assets/images/utilisateur.png" alt="Doctor Profile" class="profile-image">
+  <h3 class="doctor-name">
+    <p> {{ currentMedecin.firstName }} {{ currentMedecin.lastName }} </p>
+    <p class="speciality">Médecin Généraliste</p>
+  </h3>
+</div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="register">
+              <i class="fas fa-user-md"></i>
+              <span>Nouveau patient</span>
+            </a>
+          </li>
+          <li>
+            <a href="tableau-patient">
+              <i class="fas fa-users"></i>
+              <span>Liste des patients</span>
+            </a>
+          </li>
+          <li>
+            <a href="gestion-rendez-vous" class="active">
+              <i class="fas fa-calendar-check"></i>
+              <span>Rendez-vous</span>
+              <span class="message-badge">5</span>
+            </a>
+          </li>
+          <li>
+          <a href="dossier-medical">
+            <i class="fas fa-folder-plus"></i>
+            <span>Dossiers Médicaux</span>
+          </a>
+        </li>
+          <li>
+              <a href="conversation">
+                <i class="fas fa-envelope"></i>
+                <span>Messagerie</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification">
+                <i class="fas fa-inbox"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+          <li class="logout-item">
+            <a href="#" (click)="logout($event)">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="content-header">
+        <h1>
+          <i class="fas fa-calendar-alt"></i>
+          Gestion des Rendez-vous
+        </h1>
+        <p>Gérez vos rendez-vous et consultations</p>
+      </div>
+
+      <!-- Calendrier -->
+      <div class="form-section">
+        <h3>
+          <i class="fas fa-calendar"></i>
+          Calendrier des Rendez-vous
+        </h3>
+        <div class="calendar-container">
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+
+      <!-- Liste des Rendez-vous -->
+      <div class="form-section">
+        <h3>
+          <i class="fas fa-list"></i>
+          Liste des Rendez-vous
+        </h3>
+
+        <!-- Filtres -->
+        <div class="filters-group">
+          <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" [(ngModel)]="searchText" placeholder="Rechercher un Rendez-vous" class="search-input" />
+          </div>
+          <select class="form-input filter-select">
+            <option value="tous">Tous les états</option>
+            <option value="confirmé">Confirmés</option>
+            <option value="en attente">En attente</option>
+            <option value="annulé">Annulés</option>
+          </select>
+        </div>
+
+        <!-- Tableau -->
+<div class="table-container">
+  <table class="rdv-table">
+    <thead>
+      <tr>
+        <th><i class="fas fa-user"></i> Patient</th>
+        <th><i class="fas fa-calendar"></i> Date</th>
+        <th><i class="fas fa-clock"></i> Heure</th>
+        <th><i class="fas fa-info-circle"></i> État</th>
+        <th><i class="fas fa-cog"></i> Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rdv of rendezVousList" [ngClass]="rdv.etat">
+        <td>{{ getNomPatient(rdv.patientId) }}</td>
+        <td>{{ rdv.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{ rdv.date | date:'HH:mm' }}</td>
+        <td>
+          <span class="status-badge" [ngClass]="'status-' + rdv.etat.toLowerCase()">
+            <i class="fas"
+              [ngClass]="{
+                'fa-clock': rdv.etat === 'En attente',
+                'fa-check-circle': rdv.etat === 'Confirmé',
+                'fa-times-circle': rdv.etat === 'Annulé'
+              }">
+            </i>
+            {{ rdv.etat }}
+          </span>
+        </td>
+        <td class="actions">
+          <button class="btn-action confirm" *ngIf="rdv.etat === 'En attente'" (click)="confirmerRendezVous(rdv)">
+            <i class="fas fa-check"></i> Confirmer
+          </button>
+          <button class="btn-action cancel" *ngIf="rdv.etat !== 'Annulé'" (click)="annulerRendezVous(rdv)">
+            <i class="fas fa-times"></i> Annuler
+          </button>
+          <button class="btn-action edit">
+            <i class="fas fa-edit"></i> Modifier
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="btn-secondary"><i class="fas fa-chevron-left"></i> Précédent</button>
+          <span class="page-info">Page 1 sur 1</span>
+          <button class="btn-secondary">Suivant <i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Formulaire d'ajout de rendez-vous -->
+      <div id="addRdvForm" class="signup-form">
+        <form [formGroup]="rdvForm" (ngSubmit)="onSubmit()" class="form-ajout">
+          <h3>Ajouter un Rendez-vous</h3>
+
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input id="date" type="datetime-local" formControlName="date" />
+          </div>
+
+          <div class="form-group">
+            <label for="titre">Titre</label>
+            <input id="titre" type="text" formControlName="titre" />
+          </div>
+
+          <div class="form-group">
+            <label for="etat">État</label>
+            <select id="etat" formControlName="etat">
+              <option value="en attente">En attente</option>
+              <option value="confirmé">Confirmé</option>
+              <option value="annulé">Annulé</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="descriptionRdv">Description</label>
+            <textarea id="descriptionRdv" formControlName="descriptionRdv"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="patientId">Patient</label>
+            <select formControlName="patientId" class="form-input">
+              <option *ngFor="let patient of patients | filter:searchText" [value]="patient.id">
+                {{ patient.firstName }} {{ patient.lastName }}
+              </option>
+            </select>
+          </div>
+
+          <button type="submit">Ajouter</button>
+        </form>
+      </div>
+
+    </div> <!-- Main content -->
+  </div> <!-- Dashboard container -->
+</div> <!-- Page container -->
+
+<!-- Script to toggle form (vanilla JS fallback) -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleForm = () => {
+      const form = document.getElementById('addRdvForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    };
+    document.getElementById('toggleFormBtn').addEventListener('click', toggleForm);
+  });
+</script>

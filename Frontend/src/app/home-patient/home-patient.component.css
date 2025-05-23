@@ -1,0 +1,322 @@
+:root {
+    --couleur-primaire: #00ACC1;       /* Bleu-gris médical */
+    --couleur-secondaire: #00838F;     /* Vert santé */
+    --blanc: #ffffff;
+    --gris-clair: #f5f5f5;
+    --bleu-foncé: #2C3E50;
+    --pure-white: #ffffff;
+    --primary-blue: #00ACC1;
+    --primary-dark: #00838F;
+    --neutral-dark: #2C3E50;
+    --neutral-gray: #546E7A;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background-color: var(--blanc);
+    color: var(--couleur-primaire);
+  }
+  
+  /* HÉRO (Bannière principale) */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Voile sombre */
+    z-index: 0;
+  }
+  
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/image/medecin.jpg'); /* Ensure this path is correct */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: -1;
+    animation: zoom 20s linear infinite;
+  }
+  
+  @keyframes zoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--blanc);
+  }
+  
+  .separateur {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  
+  .ligne {
+    width: 60px;
+    height: 2px;
+    background-color: var(--couleur-secondaire);
+    margin: 0 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: apparition 1s ease forwards;
+  }
+  
+  .etoile {
+    color: var(--couleur-secondaire);
+    font-size: 1.8rem;
+  }
+  
+  .hero-text {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.7;
+    font-size: 1.2rem;
+  }
+  .hero-text .ligne {
+    margin-bottom: 10px; /* espace entre les deux lignes */
+  }
+  
+  @keyframes apparition {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .cta-boutons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  
+  .bouton {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .primaire {
+    background-color: var(--couleur-secondaire);
+    color: var(--blanc);
+  }
+  
+  .secondaire {
+    background: transparent;
+    border: 2px solid var(--couleur-secondaire);
+    color: var(--couleur-secondaire);
+  }
+  
+  .bouton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .home-container {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url('/assets/images/doctor-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--pure-white);
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: var(--pure-white);
+    box-shadow: 0 2px 10px var(--shadow-color);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-logo:hover {
+    transform: scale(1.1);
+  }
+
+  .logo-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    text-shadow: none;
+  }
+
+  .login-btn {
+    padding: 0.8rem 2rem;
+    background: #00ACC1;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .login-btn:hover {
+    background: #00838F;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 172, 193, 0.4);
+  }
+
+  .hero-section {
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .main-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+    color: var(--pure-white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+
+  .feature-card {
+    background: var(--pure-white);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    color: var(--neutral-dark);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+  }
+
+  .feature-card i {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+  }
+
+  .feature-card p {
+    color: var(--neutral-gray);
+    line-height: 1.6;
+  }
+
+  .cta-section {
+    margin-top: 4rem;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    background: var(--primary-blue);
+    color: var(--pure-white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  .cta-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--shadow-color);
+  }
+
+  .cta-subtitle {
+    color: var(--pure-white);
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 1rem 2rem;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+    }
+
+    .feature-cards {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }

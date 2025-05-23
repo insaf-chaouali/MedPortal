@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  /* Palette de couleurs médicales */
+  --primary-blue: #00ACC1;      /* Bleu médical principal */
+  --primary-dark: #00838F;      /* Bleu médical foncé */
+  --secondary-blue: #4DD0E1;    /* Bleu médical clair */
+  --neutral-dark: #2C3E50;      /* Bleu foncé pour le texte */
+  --neutral-gray: #546E7A;      /* Gris pour le texte secondaire */
+  --background-white: #F5F5F5;  /* Fond clair */
+  --pure-white: #FFFFFF;        /* Blanc pur */
+  --shadow-color: rgba(0, 172, 193, 0.2); /* Ombre avec la couleur principale */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--neutral-dark);
+  background-color: var(--background-white);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-blue);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: var(--primary-blue);
+  color: var(--pure-white);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Add smooth scrolling to the page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Styles spécifiques pour FullCalendar */
+.calendar-container {
+  padding: 20px;
+  background: var(--pure-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  margin: 20px;
+}
+

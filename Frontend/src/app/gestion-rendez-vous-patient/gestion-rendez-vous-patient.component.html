@@ -1,0 +1,164 @@
+<div class="page-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-text">
+        <i class="fas fa-heartbeat"></i>
+        MedPortal
+      </span>
+    </div>
+    <div class="nav-right">
+      <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo">
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-section" *ngIf="currentPatient">
+  <img src="../assets/images/utilisateur.png" alt="Doctor Profile" class="profile-image">
+  <h3 class="doctor-name">
+    <p> {{ currentPatient.firstName }} {{ currentPatient.lastName }} </p>
+    <p class="speciality">Patient</p>
+  </h3>
+</div>
+
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a routerLink="/gestion-rendez-vous-patient" class="active">
+              <i class="fas fa-calendar-check"></i>
+              <span>Rendez-vous</span>
+              <span class="message-badge">5</span>
+            </a>
+          </li>
+          <li>
+            <a href="dossier-medical-patient">
+              <i class="fas fa-folder-plus"></i>
+              <span>Dossiers Médicaux</span>
+            </a>
+          </li>
+          <li>
+              <a href="conversation-patient">
+                <i class="fas fa-envelope"></i>
+                <span>Messagerie</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification-patient">
+                <i class="fas fa-inbox"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+          <li class="logout-item">
+            <a href="#" (click)="logout($event)">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="content-header">
+        <h1>
+          <i class="fas fa-calendar-alt"></i>
+          Gestion des Rendez-vous
+        </h1>
+        <p>Gérez vos rendez-vous et consultations</p>
+      </div>
+
+      <!-- Calendrier -->
+      <div class="form-section">
+        <h3>
+          <i class="fas fa-calendar"></i>
+          Calendrier des Rendez-vous
+        </h3>
+        <div class="calendar-container">
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+
+      
+      <!-- Liste des Rendez-vous -->
+      <div class="form-section">
+        <h3>
+          <i class="fas fa-list"></i>
+          Liste des Rendez-vous
+        </h3>
+
+        <!-- Filtres -->
+        <div class="filters-group">
+          <div class="search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Rechercher un patient..." class="form-input">
+          </div>
+          <select class="form-input filter-select">
+            <option value="tous">Tous les états</option>
+            <option value="confirmé">Confirmés</option>
+            <option value="en attente">En attente</option>
+            <option value="annulé">Annulés</option>
+          </select>
+          <button class="btn-primary">
+            <i class="fas fa-plus"></i>
+            Nouveau Rendez-vous
+          </button>
+        </div>
+
+        <!-- Tableau -->
+        <div class="table-container">
+  <table class="rdv-table">
+    <thead>
+      <tr>
+        <th><i class="fas fa-user"></i> Medecin</th>
+        <th><i class="fas fa-calendar"></i> Date</th>
+        <th><i class="fas fa-clock"></i> Heure</th>
+        <th><i class="fas fa-info-circle"></i> État</th>
+        <th><i class="fas fa-cog"></i> Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rdv of rendezVousList" [ngClass]="rdv.etat">
+        <td>{{ getNomMedecin(rdv.medecinId) }}</td>
+        <td>{{ rdv.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{ rdv.date | date:'HH:mm' }}</td>
+        <td>
+          <span class="status-badge" [ngClass]="'status-' + rdv.etat.toLowerCase()">
+            <i class="fas"
+              [ngClass]="{
+                'fa-clock': rdv.etat === 'En attente',
+                'fa-check-circle': rdv.etat === 'Confirmé',
+                'fa-times-circle': rdv.etat === 'Annulé'
+              }">
+            </i>
+            {{ rdv.etat }}
+          </span>
+        </td>
+        <td class="actions">
+  <button class="btn-action confirm" *ngIf="rdv.etat !== EtatRdv.Annule" (click)="confirmerRendezVous(rdv)">
+    <i class="fas fa-check"></i> Confirmer
+  </button>
+  <button class="btn-action cancel" *ngIf="rdv.etat !== EtatRdv.Annule" (click)="annulerRendezVous(rdv)">
+    <i class="fas fa-times"></i> Annuler
+  </button>
+</td>
+
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="btn-secondary"><i class="fas fa-chevron-left"></i> Précédent</button>
+          <span class="page-info">Page 1 sur 1</span>
+          <button class="btn-secondary">Suivant <i class="fas fa-chevron-right"></i></button>
+        </div>
+
+      
+    </div> <!-- Main content closing tag -->
+  </div> <!-- Dashboard container closing tag -->
+</div> <!-- Page container closing tag -->

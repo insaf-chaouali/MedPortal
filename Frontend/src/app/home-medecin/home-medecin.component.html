@@ -1,0 +1,40 @@
+<!-- home-medecin.component.html -->
+<div class="home-container">
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-text">MedPortal</span>
+    </div>
+    <!-- Logo à droite -->
+    <div class="nav-right">
+      <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo">
+    </div>
+  </nav>
+
+  <div class="hero-section">
+    <div class="content-wrapper">
+      <h1 class="main-title">Gérez votre cabinet médical en toute simplicité</h1>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <i class="fas fa-calendar-alt"></i>
+          <h3>Gestion des Rendez-vous</h3>
+          <p>Planifiez et gérez vos consultations efficacement</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-user-md"></i>
+          <h3>Suivi des Patients</h3>
+          <p>Accédez aux dossiers médicaux en un clic</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-chart-line"></i>
+          <h3>Statistiques</h3>
+          <p>Analysez votre activité médicale</p>
+        </div>
+      </div>
+      <div class="cta-section">
+        <!-- Méthode 2 : Navigation programmatique avec (click) -->
+        <button (click)="allerVersDashboard()" class="cta-button">Commencer maintenant</button>
+        <p class="cta-subtitle">Rejoignez des milliers de médecins qui nous font confiance</p>
+      </div>
+    </div>
+  </div>
+</div>

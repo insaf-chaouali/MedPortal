@@ -1,0 +1,85 @@
+<div class="page-container">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-text">
+        <i class="fas fa-heartbeat"></i> MedPortal
+      </span>
+    </div>
+    <div class="nav-right">
+      <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo" />
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-section" *ngIf="currentPatient">
+  <img src="../assets/images/utilisateur.png" alt="Doctor Profile" class="profile-image">
+  <h3 class="doctor-name">
+    <p> {{ currentPatient.firstName }} {{ currentPatient.lastName }} </p>
+    <p class="speciality">Patient</p>
+  </h3>
+</div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="gestion-rendez-vous-patient">
+              <i class="fas fa-calendar-check"></i>
+              <span>Rendez-vous</span>
+              <span class="message-badge">5</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dossier-medical-patient" class="active">
+              <i class="fas fa-folder-plus"></i>
+              <span>Dossiers Médicaux</span>
+            </a>
+          </li>
+          <li>
+              <a href="conversation-patient">
+                <i class="fas fa-envelope"></i>
+                <span>Messagerie</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification-patient">
+                <i class="fas fa-inbox"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+          <li class="logout-item">
+            <a href="#" (click)="logout($event)">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dossier-medical-container">
+      <h2>Dossier Médical du Patient</h2>
+
+      <div *ngIf="pdfList.length > 0" class="pdf-grid">
+        <div class="grid">
+          <div class="card" *ngFor="let pdf of pdfList">
+            <div class="card-content">
+              <i class="fas fa-file-pdf fa-3x pdf-icon"></i>
+              <p class="file-name">{{ pdf.fileName }}</p>
+              <button class="btn-download" (click)="downloadPdf(pdf.downloadUrl)">Télécharger</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!errorMessage && pdfList.length === 0" class="no-files">
+        <p>Aucun dossier PDF disponible pour le moment.</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    </div> <!-- fin dossier-medical-container -->
+  </div> <!-- fin dashboard-container -->
+</div> <!-- fin page-container -->

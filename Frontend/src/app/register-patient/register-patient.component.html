@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ART</title>
+</head>
+<body>
+  <div class="page-container">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <span class="logo-text">
+          <i class="fas fa-heartbeat"></i>
+          MedPortal
+        </span>
+      </div>
+      <div class="nav-right">
+        <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo">
+      </div>
+    </nav>
+
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="profile-section" *ngIf="currentMedecin">
+  <img src="../assets/images/utilisateur.png" alt="Doctor Profile" class="profile-image">
+  <h3 class="doctor-name">
+    <p> {{ currentMedecin.firstName }} {{ currentMedecin.lastName }} </p>
+    <p class="speciality">Médecin Généraliste</p>
+  </h3>
+</div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="register" class="active">
+                <i class="fas fa-user-plus"></i>
+                <span>Nouveau patient</span>
+              </a>
+            </li>
+            <li>
+              <a href="tableau-patient">
+                <i class="fas fa-users"></i>
+                <span>Liste des patients</span>
+              </a>
+            </li>
+            <li>
+                <a href="gestion-rendez-vous">
+                  <i class="fas fa-calendar-check"></i>
+                  <span>Rendez-vous</span>
+                  <span class="message-badge">5</span>
+                </a>
+              </li>
+            <li>
+              <a href="dossier-medical">
+                <i class="fas fa-folder-plus"></i>
+                <span>Dossiers Médicaux</span>
+              </a>
+            </li>
+            <li>
+              <a href="conversation">
+                <i class="fas fa-envelope"></i>
+                <span>Messagerie</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification">
+                <i class="fas fa-inbox"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+            <li class="logout-item" >
+              <a href="#" (click)="logout($event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </a>
+              
+			  </li>
+			  
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <div class="content-header">
+          <h1>
+            <i class="fas fa-user-plus"></i>
+            Nouveau Patient
+          </h1>
+          <p>Création d'un nouveau patient</p>
+        </div>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+          <!-- Informations de connexion -->
+          <div class="form-section">
+            <h3>
+              <i class="fas fa-key"></i>
+              Informations de connexion
+            </h3>
+            <div class="form-group">
+              <input 
+                type="text"
+                id="login"
+                name="login"
+                formControlName="login" 
+                placeholder="Login*"
+                class="form-input">
+              <div class="error-message" *ngIf="signupForm.get('login')?.touched && signupForm.get('login')?.errors">
+                <span *ngIf="signupForm.get('login')?.errors?.['required']">Le login est requis</span>
+                <span *ngIf="signupForm.get('login')?.errors?.['minlength']">Le login doit contenir au moins 3 caractères</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <input 
+                type="email" 
+                id="email"
+                name="email"
+                formControlName="email" 
+                placeholder="Email*"
+                class="form-input">
+              <div class="error-message" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors">
+                <span *ngIf="signupForm.get('email')?.errors?.['required']">L'email est requis</span>
+                <span *ngIf="signupForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <input 
+                type="password"
+                id="password"
+                name="password" 
+                formControlName="password" 
+                placeholder="Mot de passe*"
+                class="form-input">
+              <div class="error-message" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors">
+                <span *ngIf="signupForm.get('password')?.errors?.['required']">Le mot de passe est requis</span>
+                <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</span>
+              </div>
+              <input 
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword" 
+                formControlName="confirmPassword" 
+                placeholder="Confirmer le mot de passe*"
+                class="form-input">
+              <div class="error-message" *ngIf="signupForm.errors?.['passwordMismatch']">
+                Les mots de passe ne correspondent pas
+              </div>
+            </div>
+          </div>
+
+          <!-- Informations personnelles -->
+          <div class="form-section">
+            <h3>
+              <i class="fas fa-user"></i>
+              Informations personnelles
+            </h3>
+            <div class="form-group">
+              <input 
+                type="text"
+                id="lastName"
+                name="lastName" 
+                formControlName="lastName" 
+                placeholder="Nom*"
+                class="form-input">
+              <input 
+                type="text"
+                id="firstName"
+                name="firstName" 
+                formControlName="firstName" 
+                placeholder="Prénom*"
+                class="form-input">
+            </div>
+            <div class="form-group">
+              <input 
+                type="date"
+                id="birthDate"
+                name="birthDate" 
+                formControlName="birthDate" 
+                placeholder="Date de naissance*"
+                class="form-input">
+              <select 
+                id="gender"
+                name="gender"
+                formControlName="gender"
+                class="form-input">
+                <option value="">Genre*</option>
+                <option value="M">Masculin</option>
+                <option value="F">Féminin</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Coordonnées -->
+          <div class="form-section">
+            <h3>
+              <i class="fas fa-address-card"></i>
+              Coordonnées
+            </h3>
+            <div class="form-group">
+              <input 
+                type="tel"
+                id="phone"
+                name="phone" 
+                formControlName="phone" 
+                placeholder="Téléphone* (8 chiffres)"
+                class="form-input">
+              <div class="error-message" *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.errors">
+                <span *ngIf="signupForm.get('phone')?.errors?.['required']">Le téléphone est requis</span>
+                <span *ngIf="signupForm.get('phone')?.errors?.['pattern']">Le téléphone doit contenir exactement 9 chiffres</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <input 
+                type="text"
+                id="address"
+                name="address" 
+                formControlName="address" 
+                placeholder="Adresse"
+                class="form-input">
+              <input 
+                type="text"
+                id="city"
+                name="city" 
+                formControlName="city" 
+                placeholder="Ville*"
+                class="form-input">
+            </div>
+            <div class="form-group">
+              <input 
+                type="text"
+                id="postalCode"
+                name="postalCode" 
+                formControlName="postalCode" 
+                placeholder="Code postal* (4 chiffres)"
+                class="form-input">
+              <div class="error-message" *ngIf="signupForm.get('postalCode')?.touched && signupForm.get('postalCode')?.errors">
+                <span *ngIf="signupForm.get('postalCode')?.errors?.['required']">Le code postal est requis</span>
+                <span *ngIf="signupForm.get('postalCode')?.errors?.['pattern']">Le code postal doit contenir exactement 5 chiffres</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conditions -->
+          <div class="form-section terms">
+            <div class="checkbox-group">
+              <input 
+                type="checkbox"
+                id="terms"
+                name="termsAccepted" 
+                formControlName="termsAccepted">
+              <label for="terms">
+                <i class="fas fa-check-circle"></i>
+                J'accepte les conditions d'utilisation et la politique de confidentialité*
+              </label>
+              <div class="error-message" *ngIf="signupForm.get('termsAccepted')?.touched && !signupForm.get('termsAccepted')?.value">
+                Vous devez accepter les conditions d'utilisation
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="reset" class="btn-secondary">
+              <i class="fas fa-undo"></i>
+              Réinitialiser
+            </button>
+            <button 
+              type="submit" 
+              class="btn-primary"
+              [disabled]="isLoading">
+              <i class="fas fa-user-plus"></i>
+              {{ isLoading ? 'Enregistrement en cours...' : 'Créer le compte patient' }}
+            </button>
+          </div>
+
+          <!-- Affichage des messages d'erreur -->
+          <div *ngIf="errorMessage" class="error-message-container">
+            <i class="fas fa-exclamation-circle"></i>
+            {{ errorMessage }}
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

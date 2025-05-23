@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedPortal - Tableau des Patients</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <span class="logo-text">
+          <i class="fas fa-heartbeat"></i> MedPortal
+        </span>
+      </div>
+      <div class="nav-right">
+        <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo">
+      </div>
+    </nav>
+
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="profile-section">
+          <h3 class="Admin-name">Administrateur</h3>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="register-medecin" >
+                <i class="fas fa-user-plus"></i>
+                <span>Nouveau Medecin</span>
+              </a>
+            </li>
+            <li>
+              <a href="tableau-medecin" >
+                <i class="fas fa-users"></i>
+                <span>Liste des médecins</span>
+              </a>
+            </li>
+            <li>
+              <a href="stastique" class="active">
+                <i class="fas fa-chart-bar"></i>
+                <span>Statistique</span>
+              </a>
+            </li>
+            
+            <li class="logout-item" >
+              <a href="#" (click)="logout($event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </a>
+              
+			  </li>
+			  
+          </ul>
+        </nav>
+      </aside>
+      <main>
+        <div class="statistiques-container">
+          <h2>Statistiques des médecins</h2>
+          <google-chart
+             [title]="chart.title"
+             [type]="chart.type"
+             [data]="chart.data"
+             [columnNames]="chart.columnNames"
+             [options]="chart.options"
+             [width]="chart.width"
+             [height]="chart.height">
+             </google-chart>
+        <h2>{{ pieChart.title }}</h2>
+             <google-chart
+            [type]="pieChart.type"
+            [data]="pieChart.data"
+            [columnNames]="pieChart.columnNames"
+            [options]="pieChart.options"
+            [width]="pieChart.width"
+            [height]="pieChart.height">
+            </google-chart>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

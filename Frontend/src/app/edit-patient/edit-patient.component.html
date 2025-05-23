@@ -1,0 +1,38 @@
+<div class="password-reset-wrapper">
+    <div class="password-reset-container">
+      <h2>Réinitialisation du mot de passe</h2>
+  
+      <form (ngSubmit)="onSubmit(passwordForm)" #passwordForm="ngForm">
+        <div class="form-group">
+          <label for="userId">ID utilisateur :</label>
+          <input type="number" id="userId" name="userId"
+                 [(ngModel)]="userId" required
+                 [class.is-invalid]="showUserIdError()">
+          <div *ngIf="showUserIdError()" class="invalid-feedback">
+            L'ID utilisateur est requis
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="newPassword">Nouveau mot de passe :</label>
+          <input type="password" id="newPassword" name="newPassword"
+                 [(ngModel)]="newPassword" required minlength="8"
+                 [class.is-invalid]="showPasswordError()">
+          <div *ngIf="showPasswordError()" class="invalid-feedback">
+            Le mot de passe doit contenir au moins 8 caractères
+          </div>
+        </div>
+  
+        <button type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Traitement...' : 'Modifier' }}
+        </button>
+  
+        <div *ngIf="message" class="alert mt-3"
+             [class.alert-success]="isSuccess"
+             [class.alert-danger]="!isSuccess">
+          {{ message }}
+        </div>
+      </form>
+    </div>
+  </div>
+  

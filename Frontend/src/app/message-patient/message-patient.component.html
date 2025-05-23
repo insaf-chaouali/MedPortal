@@ -1,0 +1,31 @@
+<div class="menu">
+  <div class="back" (click)="goBack()">
+  <i class="fa fa-chevron-left"></i>
+  <img src="https://i.imgur.com/DY6gND0.png" draggable="false" />
+</div>
+  <div class="name">{{ patientNom }}</div>
+</div>
+
+<ol class="chat">
+  <li *ngFor="let msg of messages" [class]="isSentBySelf(msg) ? 'self' : 'other'">
+    <div class="avatar">
+      <img [src]="isSentBySelf(msg) ? 'https://i.imgur.com/HYcn9xO.png' : 'https://i.imgur.com/DY6gND0.png'" />
+    </div>
+    <div class="msg">
+      <p>{{ msg.contenu }}</p>
+      <time>{{ msg.dateEnvoi | date: 'shortTime' }}</time>
+    </div>
+  </li>
+</ol>
+
+<div class="input-container">
+  <input
+    class="textarea"
+    type="text"
+    [(ngModel)]="newMessage"
+    placeholder="Écrivez votre message..."
+    (keydown.enter)="sendMessage()"
+  />
+    <button (click)="sendMessage()">Envoyer</button>
+</div>
+

@@ -1,0 +1,96 @@
+<div class="page-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-text">
+        <i class="fas fa-heartbeat"></i>
+        MedPortal
+      </span>
+    </div>
+    <div class="nav-right">
+      <img src="./assets/images/logo.png" alt="MedPortal Logo" class="nav-logo">
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-section" *ngIf="currentMedecin">
+        <img src="../assets/images/utilisateur.png" alt="Doctor Profile" class="profile-image">
+        <h3 class="doctor-name">
+        <p> {{ currentMedecin.firstName }} {{ currentMedecin.lastName }} </p>
+        <p class="speciality">Patient</p>
+        </h3>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+            <li>
+              <a href="register">
+                <i class="fas fa-user-plus"></i>
+                <span>Nouveau patient</span>
+              </a>
+            </li>
+            <li>
+              <a href="tableau-patient">
+                <i class="fas fa-users"></i>
+                <span>Liste des patients</span>
+              </a>
+            </li>
+            <li>
+                <a href="gestion-rendez-vous">
+                  <i class="fas fa-calendar-check"></i>
+                  <span>Rendez-vous</span>
+                  <span class="message-badge">5</span>
+                </a>
+              </li>
+            <li>
+              <a href="dossier-medical">
+                <i class="fas fa-folder-plus"></i>
+                <span>Dossiers Médicaux</span>
+              </a>
+            </li>
+            <li>
+              <a href="conversation">
+                <i class="fas fa-envelope"></i>
+                <span>Messagerie</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification"  class="active">
+                <i class="fas fa-inbox"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+            <li class="logout-item" >
+              <a href="#" (click)="logout($event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </a>
+              
+			  </li>
+			  
+          </ul>
+      </nav>
+    </aside>
+
+    <!-- Main content: notifications -->
+    <main class="main-content">
+      <div class="notifications-container">
+        <h2>Mes Notifications</h2>
+
+        <div *ngIf="notifications.length === 0" class="empty-message">
+          <p>Aucune notification pour le moment.</p>
+        </div>
+
+        <div *ngFor="let notif of notifications" class="notification-card">
+          <h3 class="notif-title">{{ notif.titre }}</h3>
+          <p class="notif-content">{{ notif.contenu }}</p>
+          <small class="notif-date">{{ notif.dateNotification | date: 'medium' }}</small>
+        </div>
+      </div>
+    </main>
+
+  </div> <!-- fin dashboard-container -->
+
+</div> <!-- fin page-container -->
